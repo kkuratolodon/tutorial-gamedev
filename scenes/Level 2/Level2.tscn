@@ -1,0 +1,90 @@
+[gd_scene load_steps=9 format=3 uid="uid://demck6aqx1m7"]
+
+[ext_resource type="Texture2D" uid="uid://de53gaxdv5s5j" path="res://assets/background.png" id="1_3ebft"]
+[ext_resource type="PackedScene" uid="uid://bp7lusj6cs10n" path="res://scenes/Level 2/SnowPlatform.tscn" id="1_uy6ip"]
+[ext_resource type="Script" path="res://scenes/Level 2/objective_area.gd" id="2_a02b0"]
+[ext_resource type="PackedScene" uid="uid://b2gvpvjdvgcd" path="res://scenes/Level 2/GreenShip.tscn" id="2_cqrrl"]
+[ext_resource type="PackedScene" uid="uid://vclfnsfnulc2" path="res://scenes/Level 2/Obstacle.tscn" id="4_so5v7"]
+[ext_resource type="Script" path="res://scenes/Level 2/border.gd" id="6_jomac"]
+[ext_resource type="Texture2D" uid="uid://dh610bbucs6rh" path="res://assets/fasilkom.png" id="6_sudv1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rsavh"]
+size = Vector2(88.0259, 84.7896)
+
+[node name="Level2" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(563.25, 328.75)
+scale = Vector2(3.32421, 3.44872)
+texture = ExtResource("1_3ebft")
+
+[node name="Platform" type="Node2D" parent="."]
+position = Vector2(540, 590)
+
+[node name="SnowPlatform" parent="Platform" instance=ExtResource("1_uy6ip")]
+
+[node name="SnowPlatform2" parent="Platform" instance=ExtResource("1_uy6ip")]
+position = Vector2(72, 0)
+
+[node name="ObjectiveArea" type="Area2D" parent="."]
+position = Vector2(0, 69)
+script = ExtResource("2_a02b0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObjectiveArea"]
+position = Vector2(1059, 511)
+scale = Vector2(1.545, 1.545)
+shape = SubResource("RectangleShape2D_rsavh")
+
+[node name="Sprite2D" type="Sprite2D" parent="ObjectiveArea/CollisionShape2D"]
+position = Vector2(0.312497, -1.0875)
+scale = Vector2(0.56, 0.538)
+texture = ExtResource("6_sudv1")
+
+[node name="GreenShip" parent="." instance=ExtResource("2_cqrrl")]
+position = Vector2(575, 472)
+jump_force = 350.0
+move_speed = 250.0
+
+[node name="Obstacles" type="Node" parent="."]
+
+[node name="Obstacle" parent="Obstacles" instance=ExtResource("4_so5v7")]
+position = Vector2(272, 251)
+
+[node name="Obstacle2" parent="Obstacles" instance=ExtResource("4_so5v7")]
+position = Vector2(434, 251)
+
+[node name="Obstacle3" parent="Obstacles" instance=ExtResource("4_so5v7")]
+position = Vector2(601, 251)
+
+[node name="Obstacle4" parent="Obstacles" instance=ExtResource("4_so5v7")]
+position = Vector2(764, 251)
+
+[node name="Obstacle5" parent="Obstacles" instance=ExtResource("4_so5v7")]
+position = Vector2(764, 411)
+
+[node name="Obstacle6" parent="Obstacles" instance=ExtResource("4_so5v7")]
+position = Vector2(764, 562)
+
+[node name="Obstacle7" parent="Obstacles" instance=ExtResource("4_so5v7")]
+position = Vector2(1058, 251)
+
+[node name="Border" type="Area2D" parent="Obstacles"]
+script = ExtResource("6_jomac")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/Border"]
+polygon = PackedVector2Array(2, -1, 2, -83, 1150, -79, 1154, -1)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Obstacles/Border"]
+position = Vector2(-330, 330)
+polygon = PackedVector2Array(267, -329, 332, -327, 332, 317, 267, 317)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Obstacles/Border"]
+position = Vector2(0, 723)
+polygon = PackedVector2Array(2, -1, 2, -83, 1154, -78, 1154, -1)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Obstacles/Border"]
+position = Vector2(889, 330)
+polygon = PackedVector2Array(267, -329, 332, -327, 332, 317, 267, 317, 267, -85.2916)
+
+[connection signal="body_entered" from="ObjectiveArea" to="ObjectiveArea" method="_on_body_entered"]
+[connection signal="body_entered" from="Obstacles/Border" to="ObjectiveArea" method="_on_border_body_entered"]

@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdoksexcakmop"]
+[gd_scene load_steps=7 format=3 uid="uid://cdoksexcakmop"]
 
 [ext_resource type="PackedScene" uid="uid://y5a4e3ajuy2r" path="res://scenes/StonePlatform.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://datfp8kxjrjg" path="res://scenes/BlueShip.tscn" id="2"]
 [ext_resource type="Script" path="res://scenes/PlatformBlue.gd" id="3"]
 [ext_resource type="Script" path="res://scenes/ObjectiveArea.gd" id="4"]
+[ext_resource type="Texture2D" uid="uid://dh610bbucs6rh" path="res://assets/fasilkom.png" id="4_a6ane"]
 
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(138.75, 79)
+size = Vector2(88.0259, 84.7896)
 
 [node name="MainLevel" type="Node"]
 
@@ -19,15 +20,22 @@ script = ExtResource("3")
 [node name="StonePlatform2" parent="PlatformBlue" instance=ExtResource("1")]
 position = Vector2(70, 0)
 
-[node name="BlueShip" parent="." instance=ExtResource("2")]
-position = Vector2(72.7009, 421.901)
-lock_rotation = true
-
 [node name="ObjectiveArea" type="Area2D" parent="."]
+position = Vector2(0, 69)
 script = ExtResource("4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObjectiveArea"]
-position = Vector2(70.625, 40)
+position = Vector2(68, -3.49999)
+scale = Vector2(1.545, 1.545)
 shape = SubResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="ObjectiveArea/CollisionShape2D"]
+position = Vector2(0.312497, -1.0875)
+scale = Vector2(0.56, 0.538)
+texture = ExtResource("4_a6ane")
+
+[node name="BlueShip" parent="." instance=ExtResource("2")]
+position = Vector2(69, 333)
+lock_rotation = true
 
 [connection signal="body_entered" from="ObjectiveArea" to="ObjectiveArea" method="_on_ObjectiveArea_body_entered"]
